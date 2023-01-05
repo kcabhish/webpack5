@@ -4,7 +4,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname,'./dist'),
         filename: 'bundle.js',
-        publicpath: '/dist'
+        publicPath: 'dist/'
     },
     mode: 'none',
     module: {
@@ -19,7 +19,16 @@ module.exports = {
                  *      files larger than 8kb are treated as asset/resource and files below 8kb are treated as asset/inline
                  * 4. asset/source : exports the source code of the asset. Previously achievable by using raw-loader.
                  */
-                type: 'asset/resource'  
+                type: 'asset',
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 3 * 1024 // Changing the default value to 3kb instead of 8kb
+                    }
+                }  
+            },
+            {
+                test: /\.txt/,
+                type: 'asset/source'
             }
         ]
     }
