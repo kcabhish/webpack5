@@ -1,4 +1,4 @@
-import './helloWorld.css';
+import './helloWorld.scss';
 class HelloWorldButton {
     render() {
         const button = document.createElement('button');

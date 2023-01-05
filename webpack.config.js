@@ -37,6 +37,15 @@ module.exports = {
                     'style-loader',
                     'css-loader'
                 ]
+            },
+            {
+                test: /\.scss$/,
+                // webpack loads loader right to left. sass-loader > css-loader > style-loader
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
             }
         ]
     }
