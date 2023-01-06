@@ -1,9 +1,4 @@
 const path = require('path');
-// in webpack 5 this plugin is predefined so do not need to install using npm.
-// this plugin is used to reduce the size of the bundle size.
-const TerserPlugin = require('terser-webpack-plugin');
-// extracts all the application css to a separate file.
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // generates html file with the webpack build in the path specified in output property
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
@@ -12,12 +7,28 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname,'./dist'),
-        // adding contenthash in the output file name will add md5 hash code in the files to detect changes in the file
-        filename: 'bundle.[contenthash].js',
+        // adding contenthash in the output file name will add md5 hash code in the files to detect changes in the file.
+        // content hash can be disabled in development mode
+        filename: 'bundle.js',
         publicPath: '',
         clean: true
     },
-    mode: 'none',
+    /**
+     * Providing the mode configuration option tells webpack to use its built-in optimizations accordingly.
+     * string = 'production': 'none' | 'development' | 'production'
+     */
+    mode: 'development',
+    devServer: {
+        port: 9000,
+        static: {
+            directory: path.resolve(__dirname,'./dist'),
+        },
+        devMiddleware: {
+            index: "index.html",
+            writeToDisk: true
+        }
+    },
+    devtool: 'source-map',
     module: {
         rules: [
             {
@@ -45,7 +56,7 @@ module.exports = {
                 test: /\.s?css$/,
                 // webpack loads loader right to left. sass-loader > css-loader > style-loader
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    'style-loader',
                     'css-loader',
                     'sass-loader'
                 ]
@@ -72,11 +83,6 @@ module.exports = {
      * for the entire application, create multiple bundle.js etc
      */
     plugins: [
-        // used for minification of the bundle size
-        new TerserPlugin(),
-        new MiniCssExtractPlugin({
-            filename: 'style.[contenthash].css'
-        }),
         // https://github.com/jantimon/html-webpack-plugin#options
         new HtmlWebpackPlugin({
             // this will generate the html file with title tag
