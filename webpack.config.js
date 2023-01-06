@@ -1,4 +1,7 @@
 const path = require('path');
+// in webpack 5 this plugin is predefined so do not need to install using npm.
+// this plugin is used to reduce the size of the bundle size.
+const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
     entry: './src/index.js',
     output: {
@@ -31,22 +34,27 @@ module.exports = {
                 type: 'asset/source'
             },
             {
-                test: /\.css$/,
-                // uses loaders to handle css and styles
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
-            },
-            {
-                test: /\.scss$/,
+                test: /\.s?css$/,
                 // webpack loads loader right to left. sass-loader > css-loader > style-loader
                 use: [
                     'style-loader',
                     'css-loader',
                     'sass-loader'
                 ]
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/env']
+                    }
+                }
             }
         ]
-    }
+    },
+    plugins: [
+        new TerserPlugin()
+    ]
 }
