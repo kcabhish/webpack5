@@ -6,7 +6,7 @@ function addImage() {
     img.alt = altText;
     img.width = 300;
     img.src = Goku;
-    const body = document.querySelector('body');
+    const body = document.getElementById('root');
     body.appendChild(img);
 }
 

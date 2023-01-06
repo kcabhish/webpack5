@@ -5,14 +5,15 @@ class HelloWorldButton {
         const button = document.createElement('button');
         button.innerHTML = 'Hello World';
         button.classList.add('hello-world-button');
+        const root =  document.getElementById('root');
         button.onclick = () => {
             const p = document.createElement('p');
             p.innerHTML = 'Hola Amigos';
             p.classList.add(this.buttonCssClass);
-            body.appendChild(p);
+            root.appendChild(p);
         }
-        const body =  document.querySelector('body');
-        body.appendChild(button);
+        root.appendChild(button);
+
     }
 }
 

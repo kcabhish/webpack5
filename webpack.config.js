@@ -59,6 +59,11 @@ module.exports = {
                         presets: ['@babel/env']
                     }
                 }
+            },{
+                test: /\.hbs$/,
+                use: [
+                    'handlebars-loader'
+                ]
             }
         ]
     },
@@ -75,12 +80,11 @@ module.exports = {
         // https://github.com/jantimon/html-webpack-plugin#options
         new HtmlWebpackPlugin({
             // this will generate the html file with title tag
-            title: 'Output Management',
+            title: 'Output Management 2',
             // custom output file name, if this is not provided it will default to index.html
-            filename: 'subfolder/custom_filename.html',
-            meta: {
-                description: 'adding some random description'
-            }
-        }),
+            // filename: 'subfolder/custom_filename.html',
+            template: 'src/index.hbs',
+            description: 'adding some random description'
+        })
     ]
 }

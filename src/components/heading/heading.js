@@ -2,9 +2,9 @@ import './heading.scss';
 class Heading {
     render() {
         const h1 = document.createElement('h1');
-        const body = document.querySelector('body');
+        const root = document.getElementById('root');
         h1.innerHTML = 'Learning Webpack 5';
-        body.appendChild(h1);
+        root.appendChild(h1);
     }
 }
 
