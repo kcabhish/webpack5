@@ -2,6 +2,7 @@ const path = require('path');
 // in webpack 5 this plugin is predefined so do not need to install using npm.
 // this plugin is used to reduce the size of the bundle size.
 const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     entry: './src/index.js',
     output: {
@@ -37,7 +38,7 @@ module.exports = {
                 test: /\.s?css$/,
                 // webpack loads loader right to left. sass-loader > css-loader > style-loader
                 use: [
-                    'style-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                     'sass-loader'
                 ]
@@ -54,7 +55,15 @@ module.exports = {
             }
         ]
     },
+    /**
+     * Plugins are additional Javascript libraries that do everything that loaders cannot do. Plugins can be used to reduce the bundle size, define global variables 
+     * for the entire application, create multiple bundle.js etc
+     */
     plugins: [
-        new TerserPlugin()
+        // used for minification of the bundle size
+        new TerserPlugin(),
+        new MiniCssExtractPlugin({
+            filename: 'style.css'
+        })
     ]
 }
