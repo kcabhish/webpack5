@@ -2,13 +2,20 @@ const path = require('path');
 // in webpack 5 this plugin is predefined so do not need to install using npm.
 // this plugin is used to reduce the size of the bundle size.
 const TerserPlugin = require('terser-webpack-plugin');
+// extracts all the application css to a separate file.
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// generates html file with the webpack build in the path specified in output property
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+        index: './src/index.js',
+    },
     output: {
         path: path.resolve(__dirname,'./dist'),
-        filename: 'bundle.js',
-        publicPath: 'dist/'
+        // adding contenthash in the output file name will add md5 hash code in the files to detect changes in the file
+        filename: 'bundle.[contenthash].js',
+        publicPath: '',
+        clean: true
     },
     mode: 'none',
     module: {
@@ -63,7 +70,17 @@ module.exports = {
         // used for minification of the bundle size
         new TerserPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'style.css'
-        })
+            filename: 'style.[contenthash].css'
+        }),
+        // https://github.com/jantimon/html-webpack-plugin#options
+        new HtmlWebpackPlugin({
+            // this will generate the html file with title tag
+            title: 'Output Management',
+            // custom output file name, if this is not provided it will default to index.html
+            filename: 'subfolder/custom_filename.html',
+            meta: {
+                description: 'adding some random description'
+            }
+        }),
     ]
 }
