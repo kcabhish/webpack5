@@ -8,12 +8,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
-        index: './src/index.js',
+        'dbz': './src/dbz.js',
+        'hello-world': './src/hello-world.js'
     },
     output: {
         path: path.resolve(__dirname,'./dist'),
-        // adding contenthash in the output file name will add md5 hash code in the files to detect changes in the file
-        filename: 'bundle.[contenthash].js',
+        // adding contenthash in the output file name will add md5 hash code in the files to detect changes in the file.
+        // [name] will grab the key from the entry object and relplace the value on the filename in the dist folder 
+        filename: '[name].[contenthash].js',
         publicPath: '',
         clean: true
     },
@@ -79,7 +81,7 @@ module.exports = {
         // used for minification of the bundle size
         // new TerserPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'style.[contenthash].css'
+            filename: '[name].[contenthash].css'
         }),
         // https://github.com/jantimon/html-webpack-plugin#options
         new HtmlWebpackPlugin({
