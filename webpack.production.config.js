@@ -24,6 +24,11 @@ module.exports = {
      * string = 'production': 'none' | 'development' | 'production'
      */
     mode: 'production',
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
     module: {
         rules: [
             {
@@ -99,7 +104,8 @@ module.exports = {
             // custom output file name, if this is not provided it will default to index.html
             // filename: 'subfolder/custom_filename.html',
             template: 'src/page-template.hbs',
-            description: 'adding some random description',
+            description: 'This description is for hello world page',
+            // by default minify is true in production mode
             minify: false
         }),
         new HtmlWebpackPlugin({
@@ -110,7 +116,7 @@ module.exports = {
             // custom output file name, if this is not provided it will default to index.html
             // filename: 'subfolder/custom_filename.html',
             template: 'src/page-template.hbs',
-            description: 'adding some random description',
+            description: 'This description is for dbz page',
             minify: false
         })
     ]
