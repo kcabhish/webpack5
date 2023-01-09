@@ -84,13 +84,34 @@ module.exports = {
             filename: '[name].[contenthash].css'
         }),
         // https://github.com/jantimon/html-webpack-plugin#options
+        /**
+         * To generate multiple html pages we need to add HtmlWebpackPlugin multiple times.
+         * For example: if we want to include 2 html pages then this needs to be included twice with different settings
+         */
         new HtmlWebpackPlugin({
+            filename: 'hello-world.html',
+            /**
+             * Chunks define the list of js files that needs to be included in the html page.
+             */
+            chunks: ['dbz'],
             // this will generate the html file with title tag
-            title: 'Output Management 2',
+            title: 'Hello world',
             // custom output file name, if this is not provided it will default to index.html
             // filename: 'subfolder/custom_filename.html',
-            template: 'src/index.hbs',
-            description: 'adding some random description'
+            template: 'src/page-template.hbs',
+            description: 'adding some random description',
+            minify: false
+        }),
+        new HtmlWebpackPlugin({
+            filename:'dbz.html',
+            chunks:['hello-world'],
+            // this will generate the html file with title tag
+            title: 'dbz',
+            // custom output file name, if this is not provided it will default to index.html
+            // filename: 'subfolder/custom_filename.html',
+            template: 'src/page-template.hbs',
+            description: 'adding some random description',
+            minify: false
         })
     ]
 }
