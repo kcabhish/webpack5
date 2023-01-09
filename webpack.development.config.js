@@ -3,13 +3,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
-        index: './src/index.js',
+        'dbz': './src/dbz.js',
+        'hello-world': './src/hello-world.js'
     },
     output: {
         path: path.resolve(__dirname,'./dist'),
         // adding contenthash in the output file name will add md5 hash code in the files to detect changes in the file.
         // content hash can be disabled in development mode
-        filename: 'bundle.js',
+        filename: '[name].js',
         publicPath: '',
         clean: true
     },
@@ -26,7 +27,8 @@ module.exports = {
         devMiddleware: {
             index: "index.html",
             writeToDisk: true
-        }
+        },
+        open:true
     },
     devtool: 'source-map',
     module: {
@@ -84,13 +86,35 @@ module.exports = {
      */
     plugins: [
         // https://github.com/jantimon/html-webpack-plugin#options
+        /**
+         * To generate multiple html pages we need to add HtmlWebpackPlugin multiple times.
+         * For example: if we want to include 2 html pages then this needs to be included twice with different settings
+         */
         new HtmlWebpackPlugin({
+            filename: 'hello-world.html',
+            /**
+             * Chunks define the list of js files that needs to be included in the html page.
+             */
+            chunks: ['dbz'],
             // this will generate the html file with title tag
-            title: 'Output Management 2',
+            title: 'Hello world',
             // custom output file name, if this is not provided it will default to index.html
             // filename: 'subfolder/custom_filename.html',
-            template: 'src/index.hbs',
-            description: 'adding some random description'
+            template: 'src/page-template.hbs',
+            description: 'This description is for hello world page',
+            // by default minify is true in production mode
+            minify: false
+        }),
+        new HtmlWebpackPlugin({
+            filename:'dbz.html',
+            chunks:['hello-world'],
+            // this will generate the html file with title tag
+            title: 'dbz',
+            // custom output file name, if this is not provided it will default to index.html
+            // filename: 'subfolder/custom_filename.html',
+            template: 'src/page-template.hbs',
+            description: 'This description is for dbz page',
+            minify: false
         })
     ]
 }

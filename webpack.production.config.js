@@ -24,9 +24,15 @@ module.exports = {
      * string = 'production': 'none' | 'development' | 'production'
      */
     mode: 'production',
+    /**
+     * By default react will not create a separate chunk for dependencies that are less than 30kb
+     * 
+     * https://webpack.js.org/configuration/optimization/
+     */
     optimization: {
         splitChunks: {
-            chunks: 'all'
+            chunks: 'all',
+            minSize: 3000 // 3kb
         }
     },
     module: {
