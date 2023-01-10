@@ -6,6 +6,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // generates html file with the webpack build in the path specified in output property
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { ModuleFederationPlugin } = require('webpack').container;
 module.exports = {
     entry: {
         'dbz': './src/dbz.js',
@@ -117,7 +118,7 @@ module.exports = {
         // }),
         new HtmlWebpackPlugin({
             filename:'dbz.html',
-            chunks:['dbz'],
+            // chunks:['dbz'],
             // this will generate the html file with title tag
             title: 'dbz',
             // custom output file name, if this is not provided it will default to index.html
@@ -125,6 +126,12 @@ module.exports = {
             template: 'src/page-template.hbs',
             description: 'This description is for dbz page',
             minify: false
+        }),
+        new ModuleFederationPlugin({
+            name: 'dbzApp',
+            remotes: {
+                HelloWorldApp: 'HelloWorldApp@http://localhost:9001/remoteEntry.js'
+            }
         })
     ]
 }

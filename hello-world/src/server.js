@@ -4,7 +4,7 @@ const path = require('path');
 const fs=require('fs');
 
 const port = 9001;
-app.use('/static', express.static(path.resolve(__dirname, '../dist')));
+app.use('/', express.static(path.resolve(__dirname, '../dist')));
 
 // app.get('/dbz', function (req, res) {
 //     const pathToHtmlFile = path.resolve(__dirname, '../dist/dbz.html');

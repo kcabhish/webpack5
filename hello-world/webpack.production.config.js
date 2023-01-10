@@ -6,6 +6,8 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // generates html file with the webpack build in the path specified in output property
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { ModuleFederationPlugin } = require('webpack').container;
+const port=9001;
 module.exports = {
     entry: {
         // 'dbz': './src/dbz.js',
@@ -17,7 +19,7 @@ module.exports = {
         // [name] will grab the key from the entry object and relplace the value on the filename in the dist folder 
         filename: '[name].[contenthash].js',
         // changing the public path to static so match server.js assets
-        publicPath: '/static/',
+        publicPath: `http://localhost:${port}/`,
         clean: true
     },
     /**
@@ -105,7 +107,7 @@ module.exports = {
             /**
              * Chunks define the list of js files that needs to be included in the html page.
              */
-            chunks: ['hello-world'],
+            // chunks: ['hello-world'],
             // this will generate the html file with title tag
             title: 'Hello world',
             // custom output file name, if this is not provided it will default to index.html
@@ -126,5 +128,12 @@ module.exports = {
         //     description: 'This description is for dbz page',
         //     minify: false
         // })
+        new ModuleFederationPlugin({
+            name: 'HelloWorldApp',
+            filename: 'remoteEntry.js',
+            exposes: {
+                './HelloWorldButton': './src/components/hello-world-button/helloWorldButton.js'
+            }
+        })
     ]
 }
