@@ -16,7 +16,8 @@ module.exports = {
         // adding contenthash in the output file name will add md5 hash code in the files to detect changes in the file.
         // [name] will grab the key from the entry object and relplace the value on the filename in the dist folder 
         filename: '[name].[contenthash].js',
-        publicPath: '',
+        // changing the public path to static so match server.js assets
+        publicPath: '/static/',
         clean: true
     },
     /**
@@ -104,7 +105,7 @@ module.exports = {
             /**
              * Chunks define the list of js files that needs to be included in the html page.
              */
-            chunks: ['dbz'],
+            chunks: ['hello-world'],
             // this will generate the html file with title tag
             title: 'Hello world',
             // custom output file name, if this is not provided it will default to index.html
@@ -116,7 +117,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             filename:'dbz.html',
-            chunks:['hello-world'],
+            chunks:['dbz'],
             // this will generate the html file with title tag
             title: 'dbz',
             // custom output file name, if this is not provided it will default to index.html
