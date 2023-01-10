@@ -95,7 +95,7 @@ module.exports = {
             /**
              * Chunks define the list of js files that needs to be included in the html page.
              */
-            chunks: ['dbz'],
+            chunks: ['hello-world'],
             // this will generate the html file with title tag
             title: 'Hello world',
             // custom output file name, if this is not provided it will default to index.html
@@ -107,7 +107,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             filename:'dbz.html',
-            chunks:['hello-world'],
+            chunks:['dbz'],
             // this will generate the html file with title tag
             title: 'dbz',
             // custom output file name, if this is not provided it will default to index.html
