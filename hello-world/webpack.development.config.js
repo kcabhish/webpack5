@@ -1,9 +1,11 @@
 const path = require('path');
 // generates html file with the webpack build in the path specified in output property
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const port = 9001;
 module.exports = {
     entry: {
-        'dbz': './src/dbz.js',
+        // 'dbz': './src/dbz.js',
         'hello-world': './src/hello-world.js'
     },
     output: {
@@ -20,7 +22,7 @@ module.exports = {
      */
     mode: 'development',
     devServer: {
-        port: 9000,
+        port: port,
         static: {
             directory: path.resolve(__dirname,'./dist'),
         },
@@ -33,27 +35,27 @@ module.exports = {
     devtool: 'source-map',
     module: {
         rules: [
-            {
-                test: /\.(png|jpg)$/,
-                /**
-                 * There are 4 types of asset types
-                 * 1. asset/resource : emits a separate file and exports the URL. Use while importing large files.
-                 * 2. asset/inline : exports a data URI of the asset. Use while importing small files.
-                 * 3. asset : automatically chooses between exporting a data URI and emitting a separate file. Previously achievable by using url-loader with asset size limit. by default it is set to 8kb,
-                 *      files larger than 8kb are treated as asset/resource and files below 8kb are treated as asset/inline
-                 * 4. asset/source : exports the source code of the asset. Previously achievable by using raw-loader.
-                 */
-                type: 'asset',
-                parser: {
-                    dataUrlCondition: {
-                        maxSize: 3 * 1024 // Changing the default value to 3kb instead of 8kb
-                    }
-                }  
-            },
-            {
-                test: /\.txt/,
-                type: 'asset/source'
-            },
+            // {
+            //     test: /\.(png|jpg)$/,
+            //     /**
+            //      * There are 4 types of asset types
+            //      * 1. asset/resource : emits a separate file and exports the URL. Use while importing large files.
+            //      * 2. asset/inline : exports a data URI of the asset. Use while importing small files.
+            //      * 3. asset : automatically chooses between exporting a data URI and emitting a separate file. Previously achievable by using url-loader with asset size limit. by default it is set to 8kb,
+            //      *      files larger than 8kb are treated as asset/resource and files below 8kb are treated as asset/inline
+            //      * 4. asset/source : exports the source code of the asset. Previously achievable by using raw-loader.
+            //      */
+            //     type: 'asset',
+            //     parser: {
+            //         dataUrlCondition: {
+            //             maxSize: 3 * 1024 // Changing the default value to 3kb instead of 8kb
+            //         }
+            //     }  
+            // },
+            // {
+            //     test: /\.txt/,
+            //     type: 'asset/source'
+            // },
             {
                 test: /\.s?css$/,
                 // webpack loads loader right to left. sass-loader > css-loader > style-loader
@@ -105,16 +107,16 @@ module.exports = {
             // by default minify is true in production mode
             minify: false
         }),
-        new HtmlWebpackPlugin({
-            filename:'dbz.html',
-            chunks:['dbz'],
-            // this will generate the html file with title tag
-            title: 'dbz',
-            // custom output file name, if this is not provided it will default to index.html
-            // filename: 'subfolder/custom_filename.html',
-            template: 'src/page-template.hbs',
-            description: 'This description is for dbz page',
-            minify: false
-        })
+        // new HtmlWebpackPlugin({
+        //     filename:'dbz.html',
+        //     chunks:['dbz'],
+        //     // this will generate the html file with title tag
+        //     title: 'dbz',
+        //     // custom output file name, if this is not provided it will default to index.html
+        //     // filename: 'subfolder/custom_filename.html',
+        //     template: 'src/page-template.hbs',
+        //     description: 'This description is for dbz page',
+        //     minify: false
+        // })
     ]
 }
